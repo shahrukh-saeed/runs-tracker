@@ -81,8 +81,41 @@ def new_game_confirm():
             return render_template('new-game.html', error=True, errMsg='Team 1 ID is invalid', userID=userID, newGameID=gameID)
         elif team2Name == None:
             return render_template('new-game.html', error=True, errMsg='Team 2 ID is invalid', userID=userID, newGameID=gameID)
-    
-    return get_user_games(userID)
+        
+    userGames = get_user_games(userID)
+
+    return render_template('dashboard.html', userID=userID, get_user_game_team_total_runs=get_user_game_team_total_runs, 
+                           get_user_team_name=get_user_team_name, userGames=userGames)
+
+@app.route('/dashboard/view-user-teams', methods=['POST'])
+def view_user_teams():
+    userID = request.form.get('userID')
+
+    userTeams = get_user_teams(userID)
+
+    return render_template('view-user-teams.html', userTeams=userTeams)
+
+@app.route('/dashboard/new-team', methods=['POST'])
+def new_team():
+    userID = request.form.get('userID')
+    lastTeamID = get_teams()[-1]['teamID']
+
+    newTeamID = int(lastTeamID) + 1
+
+    return render_template('new-team.html', userID=userID, newTeamID=newTeamID)
+
+@app.route('/dashboard/new-team/confirm', methods=['POST'])
+def new_team_confirm():
+    userID = request.form.get('userID')
+    teamID = request.form.get('teamID')
+    teamName = request.form.get('teamName')
+
+    insert_team(userID, teamID, teamName)
+
+    userGames = get_user_games(userID)
+
+    return render_template('dashboard.html', userID=userID, get_user_game_team_total_runs=get_user_game_team_total_runs, 
+                           get_user_team_name=get_user_team_name, userGames=userGames)
 
 if __name__ == '__main__':
     app.run(debug=True)

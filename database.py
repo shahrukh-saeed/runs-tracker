@@ -58,6 +58,28 @@ def get_teams():
 
     return teams
 
+def get_user_teams(userID):
+    conn = establish_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+    """
+    SELECT * FROM team WHERE userID = %s
+    """, (userID,)
+    )
+
+    result = cursor.fetchall()
+    userTeams = []
+
+    for _, teamID, teamName in result:
+        userTeams.append({'userID': userID, 'teamID': teamID, 'teamName': teamName})
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return userTeams
+
 def get_user_team_name(userID, teamID):
     conn = establish_connection()
     cursor = conn.cursor()
