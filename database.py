@@ -30,7 +30,6 @@ def get_users():
     for userID, email, password in result:
         users.append({'userID': userID, 'email': email, 'password': password})
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -52,7 +51,6 @@ def get_teams():
     for userID, teamID, teamName in result:
         teams.append({'userID': userID, 'teamID': teamID, 'teamName': teamName})
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -74,7 +72,6 @@ def get_user_teams(userID):
     for _, teamID, teamName in result:
         userTeams.append({'userID': userID, 'teamID': teamID, 'teamName': teamName})
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -99,7 +96,6 @@ def get_user_team_name(userID, teamID):
     else:
         return None
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -121,7 +117,6 @@ def get_games():
     for userID, gameID, team1ID, team2ID in result:
         games.append({'userID': userID, 'gameID': gameID, 'team1ID': team1ID, 'team2ID': team2ID})
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -143,7 +138,6 @@ def get_user_games(userID):
     for _, gameID, team1ID, team2ID in result:
         userGames.append({'userID': userID, 'gameID': gameID, 'team1ID': team1ID, 'team2ID': team2ID})
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -165,7 +159,6 @@ def get_scores():
     for userID, gameID, teamID, ballNum, runs in result:
         scores.append({'userID': userID, 'gameID': gameID, 'teamID': teamID, 'ballNum': ballNum, 'runs': runs})
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -187,7 +180,6 @@ def get_user_game_team_total_runs(userID, gameID, teamID):
     for _, _, _, _, runs in result:
         totalRuns += runs
 
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -209,7 +201,6 @@ def get_user_game_team_scores(userID, gameID, teamID):
     for userID, gameID, teamID, ballNum, runs in result:
         scores.append({'userID': userID, 'gameID': gameID, 'teamID': teamID, 'ballNum': ballNum, 'runs': runs})
 
-    conn.commit()
     cursor.close()
     conn.close()
 
